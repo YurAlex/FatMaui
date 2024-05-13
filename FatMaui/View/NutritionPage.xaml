@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FatMaui.View.NutritionPage"
+             xmlns:local="clr-namespace:FatMaui.ViewModel"
+             xmlns:viewmodel="clr-namespace:FatMaui.ViewModel"
+             x:DataType="viewmodel:NutritionViewModel"
+             Title="NutritionPage">
+
+    <ContentPage.BindingContext>
+        <local:NutritionViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="20" BackgroundColor="AliceBlue">
+        <Entry Placeholder="Вес" Text="{Binding Weight}" Keyboard="Numeric" />
+        <Entry Placeholder="Рост" Text="{Binding Height}" Keyboard="Numeric" />
+        <Entry Placeholder="Возраст" Text="{Binding Age}" Keyboard="Numeric" />
+        <Picker Title="Пол" SelectedItem="{Binding Gender}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>male</x:String>
+                    <x:String>female</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Entry Placeholder="Процент белка" Text="{Binding ProteinPercentage}" Keyboard="Numeric" />
+        <Entry Placeholder="Процент жира" Text="{Binding FatPercentage}" Keyboard="Numeric" />
+        <Entry Placeholder="Уровень активности" Text="{Binding ActivityLevel}" Keyboard="Numeric" />
+        <Picker Title="Цель" SelectedItem="{Binding Goal}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>weight loss</x:String>
+                    <x:String>weight gain</x:String>
+                    <x:String>maintain weight</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Button Text="Рассчитать" Command="{Binding CalculateCommand}" />
+
+        <Label Text="{Binding Bmr, StringFormat='Базовый обмен BMR: {0:F2} калорий'}" />
+        <Label Text="{Binding EnergyIntake, StringFormat='Потребление калорий: {0:F2} калорий'}" />
+        <Label Text="{Binding ProteinIntake, StringFormat='Потребление белка: {0:F2} грамм'}" />
+        <Label Text="{Binding FatIntake, StringFormat='Потребление жира: {0:F2} грамм'}" />
+        <Label Text="{Binding CarbIntake, StringFormat='Потребление углеводов: {0:F2} грамм'}" />
+        
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FatMaui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FatMaui.View"
+    Shell.FlyoutBehavior="Disabled"
+    Title="EasyFat">
+
+    <TabBar>
+        <Tab x:Name="LoginTab" Title="Login" Icon="icon_user_g.png">
+            <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"/>
+        </Tab>
+
+        <Tab Title="Nutrition" Icon="icon_user_g.png">
+            <ShellContent ContentTemplate="{DataTemplate local:NutritionPage}"/>
+        </Tab>
+
+        <Tab x:Name="DiaryTab" Title="Diary" Icon="icon_food_g.png">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
+        </Tab>
+
+        <Tab Title="Reports" Icon="icon_chart_g.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ReportsPage}"/>
+        </Tab>
+    </TabBar>
+
+</Shell>

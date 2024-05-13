@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FatMaui.ViewModel"
+             x:Class="FatMaui.View.MainPage"
+             x:DataType="local:MainViewModel">
+
+    <ContentPage.Resources>
+        <local:MainViewModel x:Key="viewModel" />
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <local:MainViewModel 
+            
+            x:Name="MainViewModel"/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="AliceBlue">
+            <Grid RowDefinitions="55, 55, 5" 
+          ColumnDefinitions=".30*, .70*" 
+          BackgroundColor="AliceBlue"
+     
+          Padding="5" 
+          RowSpacing="5"
+          ColumnSpacing="5"
+          BindingContext="{StaticResource viewModel}">
+
+                <!-- Строка 1 (Row 0) -->
+                <Frame Grid.Row="0" 
+                   Grid.ColumnSpan="2"
+                   BackgroundColor="LightBlue"
+                   CornerRadius="8" 
+                   ZIndex="-1">
+                </Frame>
+
+                <!-- Ввод даты по нажатию на Image-->
+                <Grid Grid.Row="0"
+              Grid.Column="0">
+                    <DatePicker Date="{Binding SelectedDate}" Opacity="0" ZIndex="2"/>
+                    <Image Source="icon_calendar.png" WidthRequest="30"/>
+                </Grid>
+
+                <!-- Вывод даты -->
+                <Label Grid.Row="0" 
+               Grid.Column="1" 
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               
+               Text="{Binding SelectedDate, StringFormat='{}{0:D}'}"/>
+
+
+                <Grid Grid.Row="1"
+                      Grid.ColumnSpan="2">
+                    <Grid RowDefinitions="Auto,Auto, 5" 
+                          ColumnDefinitions=".50*, .50*" 
+                          BackgroundColor="AliceBlue"
+                          Padding="5">
+                        <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding ProteinIntake, StringFormat='Белки: {0:F1}'}" />
+                        <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="1" Grid.Row="1" Text="{Binding EnergyIntake, StringFormat='Калории: {0:F1}'}" />
+                        <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="1" Grid.Row="0" Text="{Binding FatIntake, StringFormat='Жири: {0:F1}'}" />
+                        <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="0" Grid.Row="1" Text="{Binding CarbIntake, StringFormat='Углеводы: {0:F1}'}" />
+                    </Grid>
+                </Grid>
+                <BoxView Grid.Row="2" Grid.ColumnSpan="2" Color="Gray" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+            </Grid>
+
+            <Grid RowDefinitions="Auto,Auto,*,5" 
+                  ColumnDefinitions=".25*,.25*,.25*,.25*"
+                  BackgroundColor="AliceBlue"
+                  Padding="5">
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding TotalBrProteins, StringFormat='Б: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="3" Grid.Row="0" Text="{Binding TotalBrCalories, StringFormat='К: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="1" Grid.Row="0" Text="{Binding TotalBrFats, StringFormat='Ж: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="2" Grid.Row="0" Text="{Binding TotalBrCarbs, StringFormat='У: {0:F1}'}" />
+                <Label Margin="10,0,0,0"  HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="1" Text="Завтрак" FontSize="Default" />
+                <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Text="+" Command="{Binding AddBreakfastCommand}" />
+
+                <CollectionView Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding MeallBreakfastProduct}" 
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedMeallBreakfastProduct}"
+                                SelectionChangedCommand="{Binding DeleteSelectedMeallBreakfastProductCommand}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem BackgroundColor ="AliceBlue" Command="{Binding BindingContext.DeleteSelectedMeallBreakfastProductCommand, Source={x:Reference MainViewModel}}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Grid Padding="10" 
+                      RowDefinitions="Auto,Auto"
+                      ColumnDefinitions=".25*,.25*,.25*,.25*">
+                                    <Label Grid.Column="0" Text="{Binding Name}" FontSize="15" />
+                                    <Label Grid.Column="1" Text="{Binding Weight, StringFormat='{0:F1}г'}" FontSize="15" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Proteins, StringFormat='Б: {0:F1}г   '}" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Fats, StringFormat='Ж: {0:F1}г   '}"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Carbs, StringFormat='У: {0:F1}г  '}"/>
+                                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Calories, StringFormat='К: {0:F1}ккал '}"/>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+            <Grid RowDefinitions="Auto,Auto,*,5" 
+                  ColumnDefinitions=".25*,.25*,.25*,.25*"
+                  BackgroundColor="AliceBlue"
+                  Padding="5">
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding TotalLuProteins, StringFormat='Б: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="3" Grid.Row="0" Text="{Binding TotalLuCalories, StringFormat='К: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="1" Grid.Row="0" Text="{Binding TotalLuFats, StringFormat='Ж: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="2" Grid.Row="0" Text="{Binding TotalLuCarbs, StringFormat='У: {0:F1}'}" />
+                <Label Margin="10,0,0,0"  HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="1" Text="Обед" FontSize="Default" />
+                <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Text="+" Command="{Binding AddLunchCommand}" />
+
+                <CollectionView Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding MeallLunchProduct}" 
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedMeallLunchProduct}"
+                    SelectionChangedCommand="{Binding DeleteSelectedMeallLunchProductCommand}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem BackgroundColor ="AliceBlue" Command="{Binding BindingContext.DeleteSelectedMeallLunchProductCommand, Source={x:Reference MainViewModel}}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Grid Padding="10"
+                                      RowDefinitions="Auto,Auto"
+                                      ColumnDefinitions=".25*,.25*,.25*,.25*">
+                                    <Label Grid.Column="0" Text="{Binding Name}" FontSize="15" />
+                                    <Label Grid.Column="1" Text="{Binding Weight, StringFormat='{0:F1}г'}" FontSize="15" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Proteins, StringFormat='Б: {0:F1}г   '}" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Fats, StringFormat='Ж: {0:F1}г   '}"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Carbs, StringFormat='У: {0:F1}г  '}"/>
+                                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Calories, StringFormat='К: {0:F1}ккал '}"/>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+            <Grid RowDefinitions="Auto,Auto,*,5" 
+                  ColumnDefinitions=".25*,.25*,.25*,.25*"
+                  BackgroundColor="AliceBlue"
+                  Padding="5">
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding TotalDiProteins, StringFormat='Б: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="3" Grid.Row="0" Text="{Binding TotalDiCalories, StringFormat='К: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="1" Grid.Row="0" Text="{Binding TotalDiFats, StringFormat='Ж: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="2" Grid.Row="0" Text="{Binding TotalDiCarbs, StringFormat='У: {0:F1}'}" />
+                <Label Margin="10,0,0,0"  HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="1" Text="Ужин" FontSize="Default" />
+                <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Text="+" Command="{Binding AddDinnerCommand}" />
+
+                <CollectionView Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding MeallDinnerProduct}" 
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedMeallDinnerProduct}"
+                                SelectionChangedCommand="{Binding DeleteSelectedMeallDinnerProductCommand}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem BackgroundColor ="AliceBlue" Command="{Binding BindingContext.DeleteSelectedMeallDinnerProductCommand, Source={x:Reference MainViewModel}}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Grid Padding="10"
+                                      RowDefinitions="Auto,Auto"
+                                      ColumnDefinitions=".25*,.25*,.25*,.25*">
+                                    <Label Grid.Column="0" Text="{Binding Name}" FontSize="15" />
+                                    <Label Grid.Column="1" Text="{Binding Weight, StringFormat='{0:F1}г'}" FontSize="15" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Proteins, StringFormat='Б: {0:F1}г   '}" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Fats, StringFormat='Ж: {0:F1}г   '}"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Carbs, StringFormat='У: {0:F1}г  '}"/>
+                                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Calories, StringFormat='К: {0:F1}ккал '}"/>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+            <Grid RowDefinitions="Auto,Auto,*,5"
+                  ColumnDefinitions=".25*,.25*,.25*,.25*"
+                  BackgroundColor="AliceBlue"
+                  Padding="5">
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding TotalSnProteins, StringFormat='Б: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="3" Grid.Row="0" Text="{Binding TotalSnCalories, StringFormat='К: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="1" Grid.Row="0" Text="{Binding TotalSnFats, StringFormat='Ж: {0:F1}'}" />
+                <Label Margin="0,0,35,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  Grid.Column="2" Grid.Row="0" Text="{Binding TotalSnCarbs, StringFormat='У: {0:F1}'}" />
+                <Label Margin="10,0,0,0"  HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="0" Grid.Row="1" Text="Перекус" FontSize="Default" />
+                <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Text="+" Command="{Binding AddSnackCommand}" FontSize="Body"/>
+
+                <CollectionView Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding MeallSnackProduct}" 
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedMeallSnackProduct}"
+                                SelectionChangedCommand="{Binding DeleteSelectedMeallSnackProductCommand}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem BackgroundColor ="AliceBlue" Command="{Binding BindingContext.DeleteSelectedMeallSnackProductCommand, Source={x:Reference MainViewModel}}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Grid Padding="10"
+                                      RowDefinitions="Auto,Auto"
+                                      ColumnDefinitions=".25*,.25*,.25*,.25*">
+                                    <Label Grid.Column="0" Text="{Binding Name}" FontSize="15" />
+                                    <Label Grid.Column="1" Text="{Binding Weight, StringFormat='{0:F1}г'}" FontSize="15" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Proteins, StringFormat='Б: {0:F1}г   '}" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Fats, StringFormat='Ж: {0:F1}г   '}"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Carbs, StringFormat='У: {0:F1}г  '}"/>
+                                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Calories, StringFormat='К: {0:F1}ккал '}"/>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

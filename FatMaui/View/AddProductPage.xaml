@@ -1,0 +1,46 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FatMaui.View.AddProductPage"
+             xmlns:local="clr-namespace:FatMaui.ViewModel"
+             xmlns:viewmodel="clr-namespace:FatMaui.ViewModel"
+             x:DataType="viewmodel:AddProductViewModel">
+
+    <ContentPage.BindingContext>
+        <local:AddProductViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="15" BackgroundColor="AliceBlue">
+        <Label Text="{Binding StatusMessage}" TextColor="Red" />
+        <Label Text="Добавить новый продукт" />
+        <Entry x:Name="productNameEntry" Placeholder="Название продукта" Text="{Binding NewProductName}"/>
+        <Entry x:Name="caloriesEntry" Placeholder="Калории" Text="{Binding NewProductCalories}"/>
+        <Entry x:Name="fatsEntry" Placeholder="Жиры" Text="{Binding NewProductFats}"/>
+        <Entry x:Name="carbsEntry" Placeholder="Углеводы" Text="{Binding NewProductCarbs}"/>
+        <Entry x:Name="proteinsEntry" Placeholder="Белки" Text="{Binding NewProductProteins}"/>
+        <Button Text="Сохранить новый продукт" Command="{Binding SaveNewProductCommand}" />
+
+        <Label Text="Выберите продукт" />
+        <ListView RowHeight="70" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}">
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout VerticalOptions="Center" Spacing="5">
+                            <Label Text="{Binding Name}" FontSize="18" />
+                            <HorizontalStackLayout>
+                                <Label Text="{Binding Proteins, StringFormat='Б: {0:F2} g    '}" />
+                                <Label Text="{Binding Fats, StringFormat='Ж: {0:F2} g    '}"/>
+                                <Label Text="{Binding Carbs, StringFormat='У: {0:F2} g    '}"/>
+                                <Label Text="{Binding Calories, StringFormat='К: {0} kcal    '}"/>
+                            </HorizontalStackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label Text="Введите вес продукта" />
+        <Entry x:Name="weightEntry" Placeholder="Вес" Text="{Binding ProductWeight, Mode=TwoWay}"/>
+        <Button Text="Добавить" Command="{Binding AddProductCommand}" />
+        <Button Text="Закрыть" Command="{Binding CloseCommand}" />
+    </StackLayout>
+
+</ContentPage>

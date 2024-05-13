@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FatMaui", "FatMaui\FatMaui.csproj", "{995ABD3C-9A2B-48B4-9AA4-1424139761D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{995ABD3C-9A2B-48B4-9AA4-1424139761D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{995ABD3C-9A2B-48B4-9AA4-1424139761D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{995ABD3C-9A2B-48B4-9AA4-1424139761D3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{995ABD3C-9A2B-48B4-9AA4-1424139761D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{995ABD3C-9A2B-48B4-9AA4-1424139761D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{995ABD3C-9A2B-48B4-9AA4-1424139761D3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB8CB8FE-1877-41F1-B53F-7087565A784C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,57 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FatMaui.View.LoginPage"
+             xmlns:local="clr-namespace:FatMaui.ViewModel"
+             xmlns:viewmodel="clr-namespace:FatMaui.ViewModel"
+             x:DataType="viewmodel:LoginViewModel"
+             Title="LoginPage">
+
+    <ContentPage.BindingContext>
+        <local:LoginViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20" BackgroundColor="AliceBlue">
+        <Label Text="{Binding StatusMessage}" TextColor="Red" />
+
+        <Label Text="{Binding CurrentUser.Username}">
+            <Label.IsVisible>
+                <Binding Path="IsLoggedIn" />
+            </Label.IsVisible>
+        </Label>
+        <Label Text="{Binding CurrentUser.Id}">
+            <Label.IsVisible>
+                <Binding Path="IsLoggedIn" />
+            </Label.IsVisible>
+        </Label>
+
+        <!-- Форма входа -->
+        <StackLayout IsVisible="{Binding IsLoggedIn, Converter={StaticResource InverseBooleanConverter}}">
+            <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" />
+            <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" />
+            <Button Text="Login" Command="{Binding LoginCommand}" />
+        </StackLayout>
+
+        <!-- Форма регистрации -->
+        <StackLayout IsVisible="{Binding IsLoggedIn, Converter={StaticResource InverseBooleanConverter}}">
+            <Entry Placeholder="Username" Text="{Binding RegisterUsername}" />
+            <Entry Placeholder="Email" Text="{Binding RegisterEmail}" Keyboard="Email" />
+            <Entry Placeholder="Password" Text="{Binding RegisterPassword}" IsPassword="True" />
+            <Button Text="Register" Command="{Binding RegisterCommand}" />
+        </StackLayout>
+
+
+        <!-- Кнопка выхода -->
+        <StackLayout IsVisible="{Binding IsLoggedIn}">
+            
+            <Button Text="Logout" Command="{Binding LogoutCommand}" />
+        </StackLayout>
+        
+        
+    </StackLayout>
+</ContentPage>
